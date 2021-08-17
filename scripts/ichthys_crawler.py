@@ -28,6 +28,10 @@ dc_abbr = list(range(1, 139))
 dc_names = ['Section {}'.format(abbr) for abbr in dc_abbr]
 dc_url = 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc'
 
+pgp_abbr = 'moses abr js-m js-h a-of-f'.split(' ')
+pgp_names = 'Moses Abraham Joseph-Smith-Matthew Joseph-Smith-History Articles-of-Faith'.split(' ')
+pgp_url = 'https://www.churchofjesuschrist.org/study/scriptures/pgp'
+
 
 def get_page(url):
     url += '?lang=por'
@@ -148,7 +152,8 @@ books = {
     'ot': ['ot.json', ot_url, ot_abbr, ot_names],
     'nt': ['nt.json', nt_url, nt_abbr, nt_names],
     'bofm': ['bofm.json', bofm_url, bofm_abbr, bofm_names],
-    'dc': ['dc.json', dc_url, dc_abbr, dc_names, True]
+    'dc': ['dc.json', dc_url, dc_abbr, dc_names, True],
+    'pgp': ['pgp.json', pgp_url, pgp_abbr, pgp_names]
 }
 
 save_book(*books[book])
