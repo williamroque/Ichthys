@@ -145,9 +145,6 @@ def save_book(output_path, base_url, abbreviations, names, dc=False):
 
 book = sys.argv[1]
 
-dc_abbr = dc_abbr[115:]
-dc_names = dc_names[115:]
-
 books = {
     'ot': ['ot.json', ot_url, ot_abbr, ot_names],
     'nt': ['nt.json', nt_url, nt_abbr, nt_names],
