@@ -13,15 +13,15 @@ from bs4 import BeautifulSoup
 
 
 ot_abbr = 'gen ex lev num deut josh judg ruth 1-sam 2-sam 1-kgs 2-kgs 1-chr 2-chr ezra neh esth job ps prov eccl song isa jer lam ezek dan hosea joel amos obad jonah micah nahum hab zeph hag zech mal'.split(' ')
-ot_names = 'Genesis Exodus Leviticus Numbers Deuteronomy Joshua Judges Ruth Samuel-1 Samuel-2 Kings-1 Kings-2 Chronicles-1 Chronicles-2 Ezra Nehemiah Esther Job Psalms Proverbs Ecclesiastes Song-of-Solomon Isaiah Jeremiah Lamentations Ezekiel Daniel Hosea Joel Amos Obadiah Jonah Micah Nahum Habakkuk Zephaniah Haggai Zechariah Malachi'.split(' ')
+ot_names = 'Genesis Exodus Leviticus Numbers Deuteronomy Joshua Judges Ruth 1-Samuel 2-Samuel 1-Kings 2-Kings 1-Chronicles 2-Chronicles Ezra Nehemiah Esther Job Psalms Proverbs Ecclesiastes Song-of-Solomon Isaiah Jeremiah Lamentations Ezekiel Daniel Hosea Joel Amos Obadiah Jonah Micah Nahum Habakkuk Zephaniah Haggai Zechariah Malachi'.split(' ')
 ot_url = 'https://www.churchofjesuschrist.org/study/scriptures/ot'
 
 nt_abbr = 'matt mark luke john acts rom 1-cor 2-cor gal eph philip col 1-thes 2-thes 1-tim 2-tim titus philem heb james 1-pet 2-pet 1-jn 2-jn 3-jn jude rev'.split(' ')
-nt_names = 'Matthew Mark Luke John Acts Romans Corinthians-1 Corinthians-2 Galatians Ephesians Philippians Colossians Thessalonians-1 Thessalonians-2 Timothy-1 Timothy-2 Titus Philemon Hebrews James Peter-1 Peter-2 John-1 John-2 John-3 Jude Revelations'.split(' ')
+nt_names = 'Matthew Mark Luke John Acts Romans 1-Corinthians 2-Corinthians Galatians Ephesians Philippians Colossians 1-Thessalonians 2-Thessalonians 1-Timothy 2-Timothy Titus Philemon Hebrews James 1-Peter 2-Peter 1-John 2-John 3-John Jude Revelations'.split(' ')
 nt_url = 'https://www.churchofjesuschrist.org/study/scriptures/nt'
 
 bofm_abbr = '1-ne 2-ne jacob enos jarom omni w-of-m mosiah alma hel 3-ne 4-ne morm ether moro'.split(' ')
-bofm_names = 'Nephi-1 Nephi-2 Jacob Enos Jarom Omni Words-of-Mormon Mosiah Alma Helaman Nephi-3 Nephi-4 Mormon Ether Moroni'.split(' ')
+bofm_names = '1-Nephi 2-Nephi Jacob Enos Jarom Omni Words-of-Mormon Mosiah Alma Helaman 3-Nephi 4-Nephi Mormon Ether Moroni'.split(' ')
 bofm_url = 'https://www.churchofjesuschrist.org/study/scriptures/bofm'
 
 dc_abbr = list(range(1, 139))
@@ -33,14 +33,21 @@ pgp_names = 'Moses Abraham Joseph-Smith-Matthew Joseph-Smith-History Articles-of
 pgp_url = 'https://www.churchofjesuschrist.org/study/scriptures/pgp'
 
 
-def get_page(url):
-    url += '?lang=por'
+LANG = 'eng'
 
-    ctx = ssl._create_unverified_context()
-    with urlopen(url, context=ctx) as res:
-        if url != res.url:
-            return
-        return res.read().decode('utf-8')
+
+def get_page(url):
+    url += '?lang=' + LANG
+
+    while True:
+        try:
+            ctx = ssl._create_unverified_context()
+            with urlopen(url, context=ctx) as res:
+                if url != res.url:
+                    return
+                return res.read().decode('utf-8')
+        except:
+            print('Network error. Trying again.')
 
 
 def get_clean_soup(page):
@@ -55,7 +62,7 @@ def get_clean_soup(page):
 def get_title_count(soup):
     titles = soup.find_all('p', class_='title')
 
-    if not re.match(r'Cap', titles[0].get_text()):
+    if not re.match(r'Cap|Chap', titles[0].get_text()):
         return 1
 
     return len(titles)
@@ -110,7 +117,7 @@ def get_book(base_url, abbreviations, names, dc):
     if dc:
         book = get_chapters(len(abbreviations), base_url, abbreviations, True)
     else:
-        book = {}
+        book = {'nameOrder': [], 'bookOrder': []}
 
         for i, abbreviation in enumerate(abbreviations):
             print(abbreviation)
@@ -125,10 +132,10 @@ def get_book(base_url, abbreviations, names, dc):
 
             chapters = get_chapters(title_count, base_url, abbreviation)
 
-            book[abbreviation] = {
-                'name': names[i],
-                'chapters': chapters
-            }
+            book[abbreviation] = chapters
+
+            book['nameOrder'].append(names[i].replace('-', ' '))
+            book['bookOrder'].append(abbreviation)
 
             if sigint_sent:
                 return book
@@ -136,21 +143,36 @@ def get_book(base_url, abbreviations, names, dc):
     return book
 
 
-def save_book(output_path, base_url, abbreviations, names, dc=False):
+def save_book(output_path, index_path, base_url, abbreviations, names, dc=False):
     book = get_book(base_url, abbreviations, names, dc)
 
     with open(output_path, 'w') as output_file:
         output_file.write(json.dumps(book))
 
+        if not dc:
+            with open(index_path, 'w') as index_file:
+                index = {}
+                for i, scripture_book in enumerate(book['nameOrder']):
+                    index[scripture_book] = book['bookOrder'][i]
+
+                index_file.write(json.dumps(index))
+
 
 book = sys.argv[1]
 
 books = {
-    'ot': ['ot.json', ot_url, ot_abbr, ot_names],
-    'nt': ['nt.json', nt_url, nt_abbr, nt_names],
-    'bofm': ['bofm.json', bofm_url, bofm_abbr, bofm_names],
-    'dc': ['dc.json', dc_url, dc_abbr, dc_names, True],
-    'pgp': ['pgp.json', pgp_url, pgp_abbr, pgp_names]
+    'ot': ['ot.json', 'ot_index.json', ot_url, ot_abbr, ot_names],
+    'nt': ['nt.json', 'nt_index.json', nt_url, nt_abbr, nt_names],
+    'bofm': ['bofm.json', 'bofm_index.json', bofm_url, bofm_abbr, bofm_names],
+    'dc': ['dc.json', None, dc_url, dc_abbr, dc_names, True],
+    'pgp': ['pgp.json', 'pgp_index.json', pgp_url, pgp_abbr, pgp_names]
 }
 
-save_book(*books[book])
+if len(sys.argv) > 2:
+    LANG = sys.argv[2]
+
+if book == 'all':
+    for args in books.values():
+        save_book(*args)
+else:
+    save_book(*books[book])
