@@ -14,6 +14,10 @@ from bs4 import BeautifulSoup
 
 ot_abbr = 'gen ex lev num deut josh judg ruth 1-sam 2-sam 1-kgs 2-kgs 1-chr 2-chr ezra neh esth job ps prov eccl song isa jer lam ezek dan hosea joel amos obad jonah micah nahum hab zeph hag zech mal'.split(' ')
 ot_names = 'Genesis Exodus Leviticus Numbers Deuteronomy Joshua Judges Ruth 1-Samuel 2-Samuel 1-Kings 2-Kings 1-Chronicles 2-Chronicles Ezra Nehemiah Esther Job Psalms Proverbs Ecclesiastes Song-of-Solomon Isaiah Jeremiah Lamentations Ezekiel Daniel Hosea Joel Amos Obadiah Jonah Micah Nahum Habakkuk Zephaniah Haggai Zechariah Malachi'.split(' ')
+
+ot_abbr = 'ps'.split(' ')
+ot_names = 'Psalms'.split(' ')
+
 ot_url = 'https://www.churchofjesuschrist.org/study/scriptures/ot'
 
 nt_abbr = 'matt mark luke john acts rom 1-cor 2-cor gal eph philip col 1-thes 2-thes 1-tim 2-tim titus philem heb james 1-pet 2-pet 1-jn 2-jn 3-jn jude rev'.split(' ')
@@ -62,7 +66,7 @@ def get_clean_soup(page):
 def get_title_count(soup):
     titles = soup.find_all('p', class_='title')
 
-    if not re.match(r'Cap|Chap', titles[0].get_text()):
+    if not re.match(r'Cap|Chap|Psalm|Salmo', titles[0].get_text()):
         return 1
 
     return len(titles)

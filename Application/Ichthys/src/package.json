@@ -1,0 +1,38 @@
+{
+    "name": "ichthys",
+    "productName": "Ichthys",
+    "version": "1.0.0",
+    "description": "LDS Scriptures",
+    "build": {
+        "appId": "com.quantum.ichthys",
+        "protocols": {
+            "name": "ichthys",
+            "schemes": [
+                "ichthys"
+            ]
+        },
+        "mac": {
+            "target": "mas",
+            "icon": "assets/icon.icns",
+            "darkModeSupport": true
+        }
+    },
+    "scripts": {
+        "start": "electron .",
+        "dist": "electron-builder -m",
+        "dist-win": "electron-builder -w"
+    },
+    "main": "mjs/main.js",
+    "author": "William Roque",
+    "email": "William Roque <william.aroque@gmail.com>",
+    "license": "ISC",
+    "devDependencies": {
+        "electron": "^5.0.13",
+        "electron-builder": "^20.40.2"
+    },
+    "dependencies": {
+        "electron-is-dev": "^1.2.0",
+        "electron-window-state": "^5.0.3",
+        "fix-path": "^2.1.0"
+    }
+}

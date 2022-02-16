@@ -1,0 +1,61 @@
+body, html {
+    background-color: #fff0d1;
+}
+
+#quote {
+    color: #424242;
+    border-left-color: #778592;
+}
+
+#starting-search-input {
+    background-color: #fff0d1;
+    border: none;
+    border-radius: 0;
+    padding-bottom: 5px;
+    border-bottom: solid 2px #969798;
+    color: #7d7d7d;
+}
+
+#starting-search-input:focus {
+    box-shadow: none;
+    border-bottom-color: #697682;
+    color: #474848;
+}
+
+#titlebar {
+    background-color: #fff0d1;
+    border: none;
+}
+
+.verse-content {
+    color: #2b2b2b;
+}
+
+.verse-num {
+    color: #a29884;
+}
+
+.selected-verse {
+    border-left: solid 3px #AB9968;
+}
+
+.selected-verse > .verse-num {
+    color: #56534d;
+}
+
+.selected-verse > .verse-content {
+    font-weight: 500;
+}
+
+#overlay {
+    background: #0c0c0c2b;
+    z-index: 100;
+    border-radius: 11px;
+}
+
+#search-input {
+    background: #272727;
+    z-index: 101;
+    border: solid 1px #948f8f;
+    box-shadow: black 0 0 0 1px;
+}
