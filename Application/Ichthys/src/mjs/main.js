@@ -66,8 +66,6 @@ function createWindow() {
     mainWin.on('closed', e => mainWin = null);
 
     mainWindowState.manage(mainWin);
-
-    mainWin.webContents.openDevTools();
 };
 
 let windowPromise = new Promise((resolve, _) => {
