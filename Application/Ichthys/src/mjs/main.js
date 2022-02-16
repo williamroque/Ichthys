@@ -48,6 +48,9 @@ function createWindow() {
     mainWinObject.width = mainWindowState.width;
     mainWinObject.height = mainWindowState.height;
 
+    mainWinObject.x = mainWindowState.x;
+    mainWinObject.y = mainWindowState.y;
+
     mainWin = new BrowserWindow(mainWinObject);
     mainWin.loadURL(url.format({
         pathname: path.join(__dirname, '../html/index.html'),
