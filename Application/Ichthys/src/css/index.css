@@ -89,7 +89,7 @@ body, html {
 }
 
 .hide {
-    display: none;
+    display: none !important;
 }
 
 #credit {
@@ -117,7 +117,6 @@ body, html {
     left: 31px;
     width: 212px;
     height: 37px;
-    border-radius: 5px;
     border: solid 1px #333333;
     background: hsl(0, 0%, 6%);
     outline: none;
@@ -125,7 +124,7 @@ body, html {
     padding: 15px;
     box-sizing: border-box;
     font-size: 10pt;
-    font-family: courier;
+    font-family: 'Victor Mono';
     z-index: 99;
 }
 
@@ -135,20 +134,20 @@ body, html {
     transform: translateY(-200%);
     width: 300px;
     height: 42px;
-    border-radius: 5px;
-    border: solid 1px #5a5a5a;
+    border: none;
+    border-bottom: solid 1px #5a5a5a;
     background: #020014;
     outline: none;
     color: #696767;
     padding: 15px;
     box-sizing: border-box;
     font-size: 11pt;
-    font-family: courier;
+    font-family: 'Victor Mono';
     z-index: 99;
 }
 
 #starting-search-input:focus {
-    box-shadow: #212121 0 0 0px 2px;
+    box-shadow: 0 0 0 1px #303038;
     color: #8a8987;
 }
 
@@ -167,4 +166,37 @@ body, html {
     display: block;
     font-style: italic;
     margin-top: 8pt;
+}
+div#right-arrow {
+    right: 0;
+}
+
+div#left-arrow {
+    left: 0;
+}
+
+div#left-arrow, #right-arrow {
+    position: fixed;
+    top: 0;
+    color: transparent;
+    font-size: 28pt;
+    height: 100%;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+}
+
+div#left-arrow:hover, #right-arrow:hover {
+    color: #3c3737;
+}
+
+h1.chapter-title {
+    color: #727272;
+    font-family: roboto;
+    font-weight: 100;
+    text-align: left;
+    font-size: 32pt;
 }

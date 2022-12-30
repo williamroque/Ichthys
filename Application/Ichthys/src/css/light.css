@@ -1,5 +1,5 @@
 body, html {
-    background-color: #fff0d1;
+    background-color: #fff;
 }
 
 #quote {
@@ -8,7 +8,7 @@ body, html {
 }
 
 #starting-search-input {
-    background-color: #fff0d1;
+    background-color: #fff;
     border: none;
     border-radius: 0;
     padding-bottom: 5px;
@@ -23,7 +23,7 @@ body, html {
 }
 
 #titlebar {
-    background-color: #fff0d1;
+    background-color: #fff;
     border: none;
 }
 
@@ -58,4 +58,8 @@ body, html {
     z-index: 101;
     border: solid 1px #948f8f;
     box-shadow: black 0 0 0 1px;
+}
+
+div#left-arrow:hover, #right-arrow:hover {
+    color: #9f8e8e;
 }

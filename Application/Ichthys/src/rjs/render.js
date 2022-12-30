@@ -4,11 +4,18 @@ const titlebar = document.querySelector('#titlebar');
 let hasRendered = false;
 
 
-function renderChapter(title, chapterVerses, selectedVerses) {
+function renderChapter(title, chapterVerses, selectedVerses, chapterTitle) {
     titlebar.innerText = title;
 
     while (contentWrapper.firstChild)
         contentWrapper.firstChild.remove();
+
+    if (chapterTitle) {
+        const titleElement = document.createElement('H1');
+        titleElement.innerText = chapterTitle;
+        titleElement.classList.add('chapter-title');
+        contentWrapper.appendChild(titleElement);
+    }
 
     const table = document.createElement('TABLE');
     table.classList.add('verse-table');

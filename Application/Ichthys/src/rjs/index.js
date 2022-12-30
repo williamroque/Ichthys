@@ -11,7 +11,7 @@ ipcRenderer.on('parse-url', (_, url) => {
 });
 
 document.addEventListener('keydown', e => {
-    if (e.key === 'l') {
+    if (e.key === 'c') {
         ipcRenderer.sendSync('change-language');
     } else if (e.key === 't') {
         if (lightStylesheet.media) {

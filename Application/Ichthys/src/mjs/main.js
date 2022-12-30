@@ -27,12 +27,13 @@ const mainWinObject = {
     center: true,
     icon: '../assets/icon.png',
     titleBarStyle: 'hidden',
-    minWidth: 800,
-    minHeight: 600,
+    minWidth: 600,
+    minHeight: 450,
     backgroundColor: '#020014',
     show: false,
     webPreferences: {
-        nodeIntegration: true
+        nodeIntegration: true,
+        contextIsolation: false
     }
 };
 

@@ -73,7 +73,9 @@ function getExactMatch(text, index) {
     text = sanitize(text);
 
     for (const book in index) {
-        for (const title of index[book]) {
+        const sorted = index[book].sort((a, b) => b.length - a.length);
+
+        for (const title of sorted) {
             const sanitizedTitle = sanitize(title);
 
             const match = text.match(new RegExp(`${sanitizedTitle} (\\d+)(?::(\\d+)(?:-(\\d+))?)?`));
@@ -82,6 +84,8 @@ function getExactMatch(text, index) {
                 const [_, chapter, verse, otherVerses, ...rest] = match;
 
                 return [book, title, chapter, verse, otherVerses];
+            } else if (text === sanitizedTitle) {
+                return [book, title, '1', undefined, undefined];
             }
         }
     }
