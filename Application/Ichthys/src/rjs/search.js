@@ -104,6 +104,9 @@ function previous() {
         if (chapterNum === 1) {
             const previousTitle = index[book][index[book].indexOf(title) - 1];
 
+            if (!previousTitle)
+                return;
+
             const bookData = ipcRenderer.sendSync('request-book', book, lang);
             const lastChapter = bookData.content[previousTitle].length;
 
