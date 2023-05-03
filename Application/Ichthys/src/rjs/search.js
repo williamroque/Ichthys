@@ -190,8 +190,11 @@ function setBookmark() {
 }
 
 function scrollVerseBack() {
-    const verses = contentWrapper.children[3].children;
-    const tableOffset = contentWrapper.children[3].offsetTop - 40;
+    const table = document.querySelector('.verse-table');
+    const verses = table.children;
+
+    const tableOffset = table.offsetTop - 40;
+
     const previousVerse = [...verses].find(
         e => e.offsetTop >= contentWrapper.scrollTop - tableOffset
     ).previousSibling;
@@ -205,11 +208,15 @@ function scrollVerseBack() {
 }
 
 function scrollVerse() {
-    const verses = contentWrapper.children[3].children;
-    const tableOffset = contentWrapper.children[3].offsetTop - 40;
+    const table = document.querySelector('.verse-table');
+    const verses = table.children;
+
+    const tableOffset = table.offsetTop - 40;
+
     const nextVerse = [...verses].find(
         e => e.offsetTop > contentWrapper.scrollTop - tableOffset
     );
+
     contentWrapper.scroll({
         top: tableOffset + nextVerse.offsetTop,
         behavior: 'smooth'
