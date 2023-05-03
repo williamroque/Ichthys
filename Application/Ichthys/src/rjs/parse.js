@@ -73,7 +73,7 @@ function getExactMatch(text, index) {
     text = sanitize(text);
 
     for (const book in index) {
-        const sorted = index[book].sort((a, b) => b.length - a.length);
+        const sorted = Object.keys(index[book]).sort((a, b) => b.length - a.length);
 
         for (const title of sorted) {
             const sanitizedTitle = sanitize(title);
@@ -83,9 +83,9 @@ function getExactMatch(text, index) {
             if (match) {
                 const [_, chapter, verse, otherVerses, ...rest] = match;
 
-                return [book, title, chapter, verse, otherVerses];
+                return [book, index[book][title], chapter, verse, otherVerses];
             } else if (text === sanitizedTitle) {
-                return [book, title, '1', undefined, undefined];
+                return [book, index[book][title], '1', undefined, undefined];
             }
         }
     }

@@ -9,12 +9,23 @@ use_books = False
 aliases = ['d&c', 'doctrine and covenants', 'doutrina e convênios', 'doutrina e convenios']
 lang = 'English'
 
+# name = 'bofm'
+# data_path = f'{name}.json'
+# index_path = f'{name}_index.json'
+# output_path = f'{name}.ichs'
+# use_books = True
+# aliases = []
+# lang = 'English'
+
 with open(data_path) as data_file:
     data_raw = json.loads(data_file.read())
+    references = {}
 
     try:
         with open(index_path) as index_file:
             index = json.loads(index_file.read())
+
+            references = index
 
             index = { v: k for k, v in index.items() }
 
@@ -31,7 +42,8 @@ with open(data_path) as data_file:
         'useBooks': use_books,
         'aliases': aliases,
         'lang': lang,
-        'content': data
+        'content': data,
+        'references': references
     }
 
 with open(output_path, 'w') as f:

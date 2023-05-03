@@ -44,7 +44,8 @@ function search(query) {
     const match = getExactMatch(query, index);
 
     if (match) {
-        let [book, title, chapter, verse, otherVerses] = match;
+        let [book, key, chapter, verse, otherVerses] = match;
+        const title = reverseGet(index[book], key);
 
         const bookData = ipcRenderer.sendSync('request-book', book, lang);
 
@@ -106,19 +107,27 @@ function endSearch() {
     overlay.classList.add('hide');
 }
 
+function reverseGet(obj, value) {
+    return Object.keys(obj).find(e => obj[e] == value);
+}
+
 function next() {
     if (currentMatch) {
         const lang = ipcRenderer.sendSync('read-settings')['lang'];
-        const index = ipcRenderer.sendSync('request-index', lang);
 
-        const [book, title, chapter, verse, otherVerses] = currentMatch;
+        const [book, key, chapter, verse, otherVerses] = currentMatch;
+
+        const index = ipcRenderer.sendSync('request-index', lang)[book];
+        const keys = Object.values(index);
+        const title = reverseGet(index, key);
 
         let match = search(`${title} ${parseInt(chapter) + 1}`);
 
         if (match) {
             currentMatch = match;
         } else {
-            const nextTitle = index[book][index[book].indexOf(title) + 1];
+            const nextKey = keys[keys.indexOf(key) + 1];
+            const nextTitle = reverseGet(index, nextKey);
 
             currentMatch = search(`${nextTitle} 1`) || currentMatch;
         }
@@ -128,14 +137,18 @@ function next() {
 function previous() {
     if (currentMatch) {
         const lang = ipcRenderer.sendSync('read-settings')['lang'];
-        const index = ipcRenderer.sendSync('request-index', lang);
 
-        const [book, title, chapter, verse, otherVerses] = currentMatch;
+        const [book, key, chapter, verse, otherVerses] = currentMatch;
+
+        const index = ipcRenderer.sendSync('request-index', lang)[book];
+        const keys = Object.values(index);
+        const title = reverseGet(index, key);
 
         const chapterNum = parseInt(chapter);
 
         if (chapterNum === 1) {
-            const previousTitle = index[book][index[book].indexOf(title) - 1];
+            const previousKey = keys[keys.indexOf(key) - 1];
+            const previousTitle = reverseGet(index, previousKey);
 
             if (!previousTitle)
                 return;
@@ -154,8 +167,52 @@ function previous() {
     }
 }
 
+function openBookmark() {
+    const [book, key, chapter] = ipcRenderer.sendSync('read-settings')['bookmark'];
+    const lang = ipcRenderer.sendSync('read-settings')['lang'];
+    const index = ipcRenderer.sendSync('request-index', lang)[book];
+    const title = reverseGet(index, key);
+
+    currentMatch = search(`${title} ${chapter}`);
+
+    showMessage(`Jumped to ${title} ${chapter}.`);
+}
+
+function setBookmark() {
+    const [book, key, chapter] = currentMatch;
+    const lang = ipcRenderer.sendSync('read-settings')['lang'];
+    const index = ipcRenderer.sendSync('request-index', lang)[book];
+    const title = reverseGet(index, key);
+
+    ipcRenderer.sendSync('write-settings', 'bookmark', [book, key, chapter]);
+
+    showMessage(`Bookmarked ${title} ${chapter}.`);
+}
+
 document.addEventListener('keydown', e => {
-    if (e.key === 'f') {
+    messagePrompt.classList.add('hide');
+
+    if (e.key === 'c') {
+        const language = ipcRenderer.sendSync('change-language');
+
+        const [book, key, chapter] = currentMatch;
+        const index = ipcRenderer.sendSync('request-index', language)[book];
+        const title = reverseGet(index, key);
+
+        search(`${title} ${chapter}`);
+
+        showMessage(`Changed language to ${language}.`);
+    } else if (e.key === 't') {
+        if (lightStylesheet.media) {
+            lightStylesheet.media = '';
+            ipcRenderer.sendSync('write-settings', 'theme', 'light');
+            showMessage('Switched to light mode.');
+        } else {
+            lightStylesheet.media = 'none';
+            ipcRenderer.sendSync('write-settings', 'theme', 'dark');
+            showMessage('Switched to dark mode.');
+        }
+    } else if (e.key === 'f') {
         e.preventDefault();
 
         if (hasRendered) {
@@ -171,8 +228,11 @@ document.addEventListener('keydown', e => {
         previous();
     } else if (e.key === 'l') {
         next();
+    } else if (e.key === 'b') {
+        openBookmark();
+    } else if (e.key === 'B' && currentMatch) {
+        setBookmark();
     }
-
 }, false);
 
 searchInput.addEventListener('keydown', e => {

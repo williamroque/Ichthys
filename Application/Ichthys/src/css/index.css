@@ -234,3 +234,15 @@ h1.chapter-title {
     padding: 5px;
     border-radius: 4px;
 }
+
+div#message-prompt {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    color: hsl(51deg 9% 56%);
+    font-family: 'Victor Mono';
+    font-size: 11pt;
+    border: solid 1px #2c2c2c;
+    padding: 7px 10px;
+    background: #020014;
+}

@@ -18,7 +18,7 @@ ipcMain.on('install-package', (event, packagePath) => {
 
     let packageIndex;
     if (packageData.useBooks) {
-        packageIndex = Object.keys(packageData.content);
+        packageIndex = packageData.references;
     } else {
         packageIndex = packageData.aliases;
     }

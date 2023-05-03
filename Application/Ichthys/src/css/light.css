@@ -75,3 +75,9 @@ div#left-arrow:hover, #right-arrow:hover {
 .summary {
     color: #504e46;
 }
+
+div#message-prompt {
+    color: black;
+    font-weight: 500;
+    background: white;
+}

@@ -27,5 +27,5 @@ ipcMain.on('change-language', event => {
 
     writeSettings('lang', languages[index]);
 
-    event.returnValue = [];
+    event.returnValue = languages[index];
 });
