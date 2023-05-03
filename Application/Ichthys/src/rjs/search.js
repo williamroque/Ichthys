@@ -189,6 +189,33 @@ function setBookmark() {
     showMessage(`Bookmarked ${title} ${chapter}.`);
 }
 
+function scrollVerseBack() {
+    const verses = contentWrapper.children[3].children;
+    const tableOffset = contentWrapper.children[3].offsetTop - 40;
+    const previousVerse = [...verses].find(
+        e => e.offsetTop >= contentWrapper.scrollTop - tableOffset
+    ).previousSibling;
+
+    if (previousVerse) {
+        contentWrapper.scroll({
+            top: tableOffset + previousVerse.offsetTop,
+            behavior: 'smooth'
+        });
+    }
+}
+
+function scrollVerse() {
+    const verses = contentWrapper.children[3].children;
+    const tableOffset = contentWrapper.children[3].offsetTop - 40;
+    const nextVerse = [...verses].find(
+        e => e.offsetTop > contentWrapper.scrollTop - tableOffset
+    );
+    contentWrapper.scroll({
+        top: tableOffset + nextVerse.offsetTop,
+        behavior: 'smooth'
+    });
+}
+
 document.addEventListener('keydown', e => {
     messagePrompt.classList.add('hide');
 
@@ -221,9 +248,19 @@ document.addEventListener('keydown', e => {
             startingSearchInput.focus();
         }
     } else if (e.key === 'j') {
-        contentWrapper.scrollBy(0, 20);
+        contentWrapper.scrollBy({
+            top: 20,
+            behavior: 'smooth'
+        });
     } else if (e.key === 'k') {
-        contentWrapper.scrollBy(0, -20);
+        contentWrapper.scrollBy({
+            top: -20,
+            behavior: 'smooth'
+        });
+    } else if (e.key === 'J') {
+        scrollVerse();
+    } else if (e.key === 'K') {
+        scrollVerseBack();
     } else if (e.key === 'h') {
         previous();
     } else if (e.key === 'l') {
