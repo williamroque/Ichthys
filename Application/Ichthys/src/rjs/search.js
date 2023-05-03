@@ -34,7 +34,7 @@ function search(query) {
         const chapterIndex = parseInt(chapter) - 1;
 
         if (chapterIndex < titleContent.length) {
-            const chapterVerses = titleContent[chapterIndex];
+            const [intro, summary, chapterVerses] = titleContent[chapterIndex];
 
             let range = [];
 
@@ -47,6 +47,8 @@ function search(query) {
 
             renderChapter(
                 windowTitle,
+                intro,
+                summary,
                 chapterVerses,
                 range,
                 chapter === '1' ? title : ''

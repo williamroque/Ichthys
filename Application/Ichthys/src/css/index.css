@@ -61,7 +61,7 @@ body, html {
     font-family: 'avenir next';
     font-size: 12pt;
     color: rgb(218, 185, 137);
-    text-align: justify;
+    text-align: left;
     padding: 5px;
     margin-bottom: 5px;
 }
@@ -199,4 +199,26 @@ h1.chapter-title {
     font-weight: 100;
     text-align: left;
     font-size: 32pt;
+    margin-bottom: 0;
+}
+
+.summary {
+    color: #8a8575;
+    font-family: 'baskerville';
+    border-bottom: solid 1px #a9a79f4f;
+    padding: 2px 4px 23px 15px;
+    line-height: 20pt;
+    font-size: 13pt;
+}
+
+.intro {
+    color: #9f9987;
+    font-family: 'avenir next';
+    text-align: justify;
+    padding: 2px 25px 10px 36px;
+    line-height: 20pt;
+    font-size: 12pt;
+    margin-bottom: 0px;
+    margin-top: 20px;
+    hyphens: auto;
 }

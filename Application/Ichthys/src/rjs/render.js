@@ -4,7 +4,7 @@ const titlebar = document.querySelector('#titlebar');
 let hasRendered = false;
 
 
-function renderChapter(title, chapterVerses, selectedVerses, chapterTitle) {
+function renderChapter(title, intro, summary, chapterVerses, selectedVerses, chapterTitle) {
     titlebar.innerText = title;
 
     while (contentWrapper.firstChild)
@@ -15,6 +15,20 @@ function renderChapter(title, chapterVerses, selectedVerses, chapterTitle) {
         titleElement.innerText = chapterTitle;
         titleElement.classList.add('chapter-title');
         contentWrapper.appendChild(titleElement);
+    }
+
+    if (intro) {
+        const introElement = document.createElement('p');
+        introElement.innerText = intro;
+        introElement.classList.add('intro');
+        contentWrapper.appendChild(introElement);
+    }
+
+    if (summary) {
+        const summaryElement = document.createElement('p');
+        summaryElement.innerText = summary;
+        summaryElement.classList.add('summary');
+        contentWrapper.appendChild(summaryElement);
     }
 
     const table = document.createElement('TABLE');
