@@ -63,3 +63,15 @@ body, html {
 div#left-arrow:hover, #right-arrow:hover {
     color: #9f8e8e;
 }
+
+#percentage-indicator {
+    color: #565353;
+}
+
+.intro {
+    color: #46443b;
+}
+
+.summary {
+    color: #504e46;
+}

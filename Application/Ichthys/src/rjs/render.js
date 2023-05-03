@@ -1,11 +1,14 @@
 const contentWrapper = document.querySelector('#content');
 const titlebar = document.querySelector('#titlebar');
+const percentageIndicator = document.querySelector('#percentage-indicator');
 
 let hasRendered = false;
 
 
-function renderChapter(title, intro, summary, chapterVerses, selectedVerses, chapterTitle) {
+function renderChapter(title, intro, summary, chapterVerses, selectedVerses, chapterTitle, percentage) {
     titlebar.innerText = title;
+    percentageIndicator.innerText = Math.round(percentage * 100).toString() + '%';
+    percentageIndicator.classList.remove('hide');
 
     while (contentWrapper.firstChild)
         contentWrapper.firstChild.remove();

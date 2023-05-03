@@ -11,6 +11,32 @@ const rightArrow = document.querySelector('#right-arrow');
 let currentMatch;
 
 
+function calculatePercentage(data, title, currentChapter) {
+    let total = 0;
+
+    let count = 0;
+    let stillCounting = true;
+
+    Object.entries(data['content']).forEach(([book, chapters]) => {
+        chapters.forEach((chapter, index) => {
+            if (book === title && index === currentChapter) {
+                stillCounting = false;
+            }
+
+            for (const verse of chapter[2]) {
+                total += verse.length;
+
+                if (stillCounting) {
+                    count += verse.length;
+                }
+            }
+        });
+    });
+
+    return count / total;
+}
+
+
 function search(query) {
     const lang = ipcRenderer.sendSync('read-settings')['lang'];
     const index = ipcRenderer.sendSync('request-index', lang);
@@ -36,6 +62,10 @@ function search(query) {
         if (chapterIndex < titleContent.length) {
             const [intro, summary, chapterVerses] = titleContent[chapterIndex];
 
+            const percentage = calculatePercentage(
+                bookData, title, chapterIndex
+            );
+
             let range = [];
 
             if (verse) {
@@ -51,7 +81,8 @@ function search(query) {
                 summary,
                 chapterVerses,
                 range,
-                chapter === '1' ? title : ''
+                chapter === '1' ? title : '',
+                percentage
             );
             leftArrow.classList.remove('hide');
             rightArrow.classList.remove('hide');

@@ -222,3 +222,15 @@ h1.chapter-title {
     margin-top: 20px;
     hyphens: auto;
 }
+
+#percentage-indicator {
+    position: fixed;
+    color: #b9b9b9;
+    bottom: 10px;
+    right: 10px;
+    font-family: 'avenir next';
+    font-size: 11pt;
+    border: solid 1px #7c7a7a;
+    padding: 5px;
+    border-radius: 4px;
+}
