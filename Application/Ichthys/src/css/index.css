@@ -39,6 +39,10 @@ body, html {
     box-sizing: border-box;
 }
 
+#content * {
+    max-width: 700px;
+}
+
 .spacer {
     flex-grow: 1;
 }
@@ -167,15 +171,16 @@ body, html {
     font-style: italic;
     margin-top: 8pt;
 }
-div#right-arrow {
+
+#right-arrow {
     right: 0;
 }
 
-div#left-arrow {
+#left-arrow {
     left: 0;
 }
 
-div#left-arrow, #right-arrow {
+#left-arrow, #right-arrow {
     position: fixed;
     top: 0;
     color: transparent;
@@ -189,7 +194,7 @@ div#left-arrow, #right-arrow {
     cursor: pointer;
 }
 
-div#left-arrow:hover, #right-arrow:hover {
+#left-arrow:hover, #right-arrow:hover {
     color: #3c3737;
 }
 
@@ -235,7 +240,7 @@ h1.chapter-title {
     border-radius: 4px;
 }
 
-div#message-prompt {
+#message-prompt {
     position: fixed;
     bottom: 10px;
     left: 10px;
