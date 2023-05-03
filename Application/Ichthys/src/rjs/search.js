@@ -258,6 +258,7 @@ startingSearchInput.addEventListener('keydown', e => {
 
 document.addEventListener('click', e => {
     endSearch();
+    messagePrompt.classList.add('hide');
 }, false);
 
 leftArrow.addEventListener('click', previous, false);
