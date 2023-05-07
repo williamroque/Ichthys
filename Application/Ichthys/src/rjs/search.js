@@ -223,6 +223,28 @@ function scrollVerse() {
     });
 }
 
+function scrollBeginning() {
+    const table = document.querySelector('.verse-table');
+    const tableOffset = table.offsetTop - 40;
+
+    contentWrapper.scroll({
+        top: tableOffset,
+        behavior: 'smooth'
+    });
+}
+
+function scrollEnd() {
+    const table = document.querySelector('.verse-table');
+    const verses = table.children;
+
+    const tableOffset = table.offsetTop - 40;
+
+    contentWrapper.scroll({
+        top: tableOffset + verses[verses.length - 1].offsetTop,
+        behavior: 'smooth'
+    });
+}
+
 document.addEventListener('keydown', e => {
     messagePrompt.classList.add('hide');
 
@@ -268,6 +290,10 @@ document.addEventListener('keydown', e => {
         scrollVerse();
     } else if (e.key === 'K') {
         scrollVerseBack();
+    } else if (e.key === 'g') {
+        scrollBeginning();
+    } else if (e.key === 'G') {
+        scrollEnd();
     } else if (e.key === 'h') {
         previous();
     } else if (e.key === 'l') {
