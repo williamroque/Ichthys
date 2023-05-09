@@ -48,6 +48,34 @@ const quotes = [
     [
         'Conduct yourselves with all humility, gentleness, and patience. Accept each other with love, and make an effort to preserve the unity of the Spirit with the peace that ties you together.',
         'Ephesians 4:2−3'
+    ],
+    [
+        'And now, O my son Helaman, behold, thou art in thy youth, and therefore, I beseech of thee that thou wilt hear my words and learn of me; for I do know that whosoever shall put their trust in God shall be supported in their trials, and their troubles, and their afflictions, and shall be lifted up at the last day.',
+        'Alma 36:3',
+    ],
+    [
+        'Peace I leave with you, my peace I give unto you: not as the world giveth, give I unto you. Let not your heart be troubled, neither let it be afraid.',
+        'John 14:27'
+    ],
+    [
+        'And now as I said concerning faith—faith is not to have a perfect knowledge of things; therefore if ye have faith ye hope for things which are not seen, which are true.',
+        'Alma 32:21'
+    ],
+    [
+        'Wherefore, there must be faith; and if there must be faith there must also be hope; and if there must be hope there must also be charity.',
+        'Moroni 10:20'
+    ],
+    [
+        'To every thing there is a season, and a time to every purpose under the heaven; A time to be born, and a time to die; A time to break down, and a time to build up; A time to weep, and a time to laugh; A time to mourn, and a time to dance; A time to embrace, and a time to refrain; A time to keep silence, and a time to speak; A time to love, and a time to hate; A time of war, and a time of peace.',
+        'Ecclesiastes 3:1-8'
+    ],
+    [
+        'The Lord is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters. He restoreth my soul: he leadeth me in the paths of righteousness for his name’s sake. Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me; thy rod and thy staff they comfort me.',
+        'Psalms 23:1-4'
+    ],
+    [
+        'Now ye may suppose that this is afoolishness in me; but behold I say unto you, that by bsmall and simple things are great things brought to pass; and small means in many instances doth confound the wise.',
+        'Alma 37:6'
     ]
 ];
 
