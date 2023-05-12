@@ -204,7 +204,7 @@ h1.chapter-title {
     font-weight: 100;
     text-align: left;
     font-size: 32pt;
-    margin-bottom: 0;
+    margin-bottom: 20px;
 }
 
 .summary {
@@ -214,6 +214,7 @@ h1.chapter-title {
     padding: 2px 4px 23px 15px;
     line-height: 20pt;
     font-size: 13pt;
+    margin-top: 0;
 }
 
 .intro {
