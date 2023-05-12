@@ -251,11 +251,13 @@ document.addEventListener('keydown', e => {
     if (e.key === 'c') {
         const language = ipcRenderer.sendSync('change-language');
 
-        const [book, key, chapter] = currentMatch;
-        const index = ipcRenderer.sendSync('request-index', language)[book];
-        const title = reverseGet(index, key);
+        if (currentMatch) {
+            const [book, key, chapter] = currentMatch;
+            const index = ipcRenderer.sendSync('request-index', language)[book];
+            const title = reverseGet(index, key);
 
-        search(`${title} ${chapter}`);
+            search(`${title} ${chapter}`);
+        }
 
         showMessage(`Changed language to ${language}.`);
     } else if (e.key === 't') {

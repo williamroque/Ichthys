@@ -60,11 +60,7 @@ function renderChapter(title, intro, summary, chapterVerses, selectedVerses, cha
             verseElement.classList.add('selected-verse');
         }
 
-        const contentTextElement = document.createTextNode(
-            verse.replace(/^\d+ /, '')
-        );
-
-        contentElement.appendChild(contentTextElement);
+        contentElement.innerHTML = verse.replace(/^\d+ /, '');
         verseElement.appendChild(contentElement);
 
         table.appendChild(verseElement);
