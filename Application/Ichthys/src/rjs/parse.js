@@ -1,11 +1,8 @@
-function sanitize(text, unicode=false) {
+function sanitize(text) {
     text = text.toLowerCase();
     text = text.trim();
 
-    if (unicode) {
-        text = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-        text = text.replace(/[^a-z0-9:\- ]/g, '');
-    }
+    text = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
     text = text.replace(/–/g, '-');
     text = text.replace(/ {2,}/g, ' ');
@@ -72,14 +69,14 @@ function fuzzyGetBook(text, index) {
     return distances[Math.min(...Object.keys(distances))];
 }
 
-function getExactMatch(text, index, unicode=false) {
-    text = sanitize(text, unicode);
+function getExactMatch(text, index) {
+    text = sanitize(text);
 
     for (const book in index) {
         const sorted = Object.keys(index[book]).sort((a, b) => b.length - a.length);
 
         for (const title of sorted) {
-            const sanitizedTitle = sanitize(title, unicode);
+            const sanitizedTitle = sanitize(title);
 
             const match = text.match(new RegExp(`${sanitizedTitle} (\\d+)(?::(\\d+)(?:-(\\d+))?)?`));
 
@@ -91,10 +88,6 @@ function getExactMatch(text, index, unicode=false) {
                 return [book, index[book][title], '1', undefined, undefined];
             }
         }
-    }
-
-    if (!unicode) {
-        return getExactMatch(text, index, true);
     }
 }
 

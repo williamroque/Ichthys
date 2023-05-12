@@ -46,7 +46,7 @@ function renderChapter(title, intro, summary, chapterVerses, selectedVerses, cha
         verseElement.classList.add('verse');
 
         const numElement = document.createElement('TD');
-        const num = verse.match(/^\d+/)[0];
+        const num = verse.match(/(?<=^〔|^)\d+/)[0];
         const numTextElement = document.createTextNode(num);
 
         numElement.appendChild(numTextElement);
@@ -60,7 +60,7 @@ function renderChapter(title, intro, summary, chapterVerses, selectedVerses, cha
             verseElement.classList.add('selected-verse');
         }
 
-        contentElement.innerHTML = verse.replace(/^\d+ /, '');
+        contentElement.innerHTML = verse.replace(/(?<=^〔|^)\d+/, '');
         verseElement.appendChild(contentElement);
 
         table.appendChild(verseElement);
