@@ -270,34 +270,25 @@ document.addEventListener('keydown', e => {
 
     if (e.key === 'c') {
         const language = ipcRenderer.sendSync('change-language');
+        ipcRenderer.sendSync('notify-settings-changed');
 
-        if (currentMatch) {
-            const [book, key, chapter, verse, otherVerses] = currentMatch;
-            const index = ipcRenderer.sendSync('request-index', language)[book];
-            const title = reverseGet(index, key);
-
-            saveVerseExcursion(() => {
-                if (verse) {
-                    if (otherVerses) {
-                        search(`${title} ${chapter}:${verse}-${otherVerses}`);
-                    } else {
-                        search(`${title} ${chapter}:${verse}`);
-                    }
-                } else {
-                    search(`${title} ${chapter}`);
-                }
-            });
-        }
+        loadLanguage(language);
 
         showMessage(`Changed language to ${language}.`);
     } else if (e.key === 't') {
         if (lightStylesheet.media) {
             lightStylesheet.media = '';
-            ipcRenderer.sendSync('write-settings', 'theme', 'light');
+
+            ipcRenderer.sendSync('write-settings', 'theme', 'Light');
+            ipcRenderer.sendSync('notify-settings-changed');
+
             showMessage('Switched to light mode.');
         } else {
             lightStylesheet.media = 'none';
-            ipcRenderer.sendSync('write-settings', 'theme', 'dark');
+
+            ipcRenderer.sendSync('write-settings', 'theme', 'Dark');
+            ipcRenderer.sendSync('notify-settings-changed');
+
             showMessage('Switched to dark mode.');
         }
     } else if (e.key === 'f') {

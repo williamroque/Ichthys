@@ -81,3 +81,27 @@ div#message-prompt {
     font-weight: 500;
     background: white;
 }
+
+h1.settings-heading {
+    font-family: 'avenir next';
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #323232;
+    font-size: 11pt;
+}
+
+table.settings-wrapper {
+    border-bottom: solid 1px black;
+}
+
+.select-input {
+    background: #ffffff;
+    color: #000000;
+    border: solid 1px black;
+    font-weight: 600;
+}
+
+.label-wrapper {
+    color: #1e1e1b !important;
+    font-weight: 500;
+}

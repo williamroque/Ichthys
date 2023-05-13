@@ -16,3 +16,82 @@
     border-bottom: solid 1px #1f1f1f;
     z-index: 99;
 }
+
+h1.settings-heading {
+    font-family: 'avenir next';
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #999786;
+    font-size: 11pt;
+}
+
+div#settings {
+    padding: 28px 17px 17px 17px;
+}
+
+table.settings-wrapper {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px #5c5c5c;
+    width: 100%;
+}
+
+.hide {
+    display: none;
+}
+
+.select-input {
+    color: #969798;
+    padding: 10px;
+    border: solid 1px #878787;
+    font-family: 'victor mono';
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 10pt;
+    font-weight: 600;
+}
+
+table.settings-wrapper:last-child {
+    border-bottom: none;
+}
+
+td.label-wrapper {
+    padding: 10px;
+    font-family: avenir next;
+    color: #999786;
+}
+
+td.input-wrapper {
+    width: 170px;
+}
+
+.select-dropdown {
+    position: absolute;
+    background: #141313;
+    width: 170px;
+    color: #cbcccd;
+    padding: 10px;
+    border: solid 1px #878787;
+    font-family: 'victor mono';
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 10pt;
+    font-weight: 600;
+    box-sizing: border-box;
+    transform: translateY(3px);
+    padding: 0px 0;
+}
+
+.dropdown-item.dropdown-item-selected {
+    background: #282828;
+}
+
+.dropdown-item {
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 2px;
+}
+
+.dropdown-item:hover {
+    background: #403c39;
+}

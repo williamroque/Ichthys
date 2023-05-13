@@ -8,8 +8,8 @@ const fileio = new FileIO();
 const settingsPath = path.join(fileio.path, 'settings.json');
 
 const defaultSettings = {
-    lang: 'Portuguese',
-    theme: 'dark'
+    lang: 'English',
+    theme: 'Light'
 };
 
 function readSettings() {
