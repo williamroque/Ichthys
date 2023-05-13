@@ -29,3 +29,7 @@ ipcMain.on('change-language', event => {
 
     event.returnValue = languages[index];
 });
+
+ipcMain.on('get-languages', event => {
+    event.returnValue = getLanguages();
+});

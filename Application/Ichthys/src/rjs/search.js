@@ -8,9 +8,6 @@ const leftArrow = document.querySelector('#left-arrow');
 const rightArrow = document.querySelector('#right-arrow');
 
 
-let currentMatch;
-
-
 function calculatePercentage(data, title, currentChapter) {
     let total = 0;
 
@@ -245,6 +242,29 @@ function scrollEnd() {
     });
 }
 
+function saveVerseExcursion(callback) {
+    let table = document.querySelector('.verse-table');
+    let verses = table.children;
+
+    let tableOffset = table.offsetTop - 40;
+    const currentPosition = contentWrapper.scrollTop - tableOffset;
+
+    const verseIndex = [...verses].findIndex(
+        e => e.offsetTop > currentPosition
+    );
+    const offset = currentPosition - verses[verseIndex].offsetTop;
+
+    callback();
+
+    table = document.querySelector('.verse-table');
+    verses = table.children;
+    tableOffset = table.offsetTop - 40;
+
+    contentWrapper.scroll({
+        top: tableOffset + offset + verses[verseIndex].offsetTop
+    });
+}
+
 document.addEventListener('keydown', e => {
     messagePrompt.classList.add('hide');
 
@@ -252,11 +272,21 @@ document.addEventListener('keydown', e => {
         const language = ipcRenderer.sendSync('change-language');
 
         if (currentMatch) {
-            const [book, key, chapter] = currentMatch;
+            const [book, key, chapter, verse, otherVerses] = currentMatch;
             const index = ipcRenderer.sendSync('request-index', language)[book];
             const title = reverseGet(index, key);
 
-            search(`${title} ${chapter}`);
+            saveVerseExcursion(() => {
+                if (verse) {
+                    if (otherVerses) {
+                        search(`${title} ${chapter}:${verse}-${otherVerses}`);
+                    } else {
+                        search(`${title} ${chapter}:${verse}`);
+                    }
+                } else {
+                    search(`${title} ${chapter}`);
+                }
+            });
         }
 
         showMessage(`Changed language to ${language}.`);

@@ -2,8 +2,12 @@ const {
     app,
     BrowserWindow,
     dialog,
-    ipcMain
+    ipcMain,
+    Menu,
+    Accelerator
 } = require('electron');
+
+const isMac = process.platform === 'darwin';
 
 const path = require('path');
 
@@ -36,8 +40,23 @@ const mainWinObject = {
         contextIsolation: false
     }
 };
+const settingsWinObject = {
+    center: true,
+    icon: '../assets/icon.png',
+    titleBarStyle: 'hidden',
+    width: 350,
+    height: 500,
+    resizable: false,
+    backgroundColor: '#020014',
+    show: false,
+    webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false
+    }
+};
 
 let mainWin;
+let settingsWin;
 let openURL;
 
 function createWindow() {
@@ -111,7 +130,115 @@ function registerURLScheme() {
     });
 }
 
-if (process.platform === 'darwin') {
+function openPreferences() {
+    settingsWin = new BrowserWindow(settingsWinObject);
+
+    settingsWin.loadURL(url.format({
+        pathname: path.join(__dirname, '../html/settings.html'),
+        protocol: 'file:',
+        slashes: true
+    }));
+
+    settingsWin.webContents.once('did-finish-load', () => {
+        settingsWin.show();
+    });
+    settingsWin.on('closed', e => settingsWin = null);
+}
+
+ipcMain.on('notify-settings-changed', event => {
+    if (mainWin) {
+        mainWin.webContents.send('settings-changed');
+    }
+
+    if (settingsWin) {
+        settingsWin.webContents.send('settings-changed');
+    }
+
+    event.returnValue = '';
+});
+
+const template = [
+    ...(isMac ? [{
+        label: app.name,
+        submenu: [
+            { role: 'about' },
+            { type: 'separator' },
+            {
+                label: 'Preferences',
+                click: openPreferences,
+                accelerator: 'CmdOrCtrl+,'
+            },
+            { type: 'separator' },
+            { role: 'services' },
+            { type: 'separator' },
+            { role: 'hide' },
+            { role: 'hideOthers' },
+            { role: 'unhide' },
+            { type: 'separator' },
+            { role: 'quit' }
+        ]
+    }] : []),
+    {
+        label: 'Edit',
+        submenu: [
+            { role: 'undo' },
+            { role: 'redo' },
+            { type: 'separator' },
+            { role: 'cut' },
+            { role: 'copy' },
+            { role: 'paste' },
+            ...(isMac ? [
+                { role: 'delete' },
+                { role: 'selectAll' },
+                { type: 'separator' },
+                {
+                    label: 'Speech',
+                    submenu: [
+                        { role: 'startSpeaking' },
+                        { role: 'stopSpeaking' }
+                    ]
+                }
+            ] : [
+                { role: 'delete' },
+                { type: 'separator' },
+                { role: 'selectAll' }
+            ])
+        ]
+    },
+    {
+        label: 'View',
+        submenu: [
+            { type: 'separator' },
+            { role: 'resetZoom' },
+            { role: 'zoomIn' },
+            { role: 'zoomOut' },
+            { type: 'separator' },
+            { role: 'togglefullscreen' },
+            { role: 'toggleDevTools' }
+        ]
+    },
+    {
+        label: 'Window',
+        submenu: [
+            { role: 'minimize' },
+            { role: 'zoom' },
+            ...(isMac ? [
+                { type: 'separator' },
+                { role: 'front' },
+                { type: 'separator' },
+                { role: 'window' },
+                { role: 'close' }
+            ] : [
+                { role: 'close' }
+            ])
+        ]
+    }
+]
+
+const menu = Menu.buildFromTemplate(template);
+Menu.setApplicationMenu(menu);
+
+if (isMac) {
     registerURLScheme();
 } else {
     const gotTheLock = app.requestSingleInstanceLock();

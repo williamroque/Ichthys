@@ -4,12 +4,15 @@ const initialTheme = ipcRenderer.sendSync('read-settings')['theme'];
 const messagePrompt = document.querySelector('#message-prompt');
 
 
+let currentMatch;
+
+
 if (initialTheme === 'light') {
     lightStylesheet.media = '';
 }
 
 ipcRenderer.on('parse-url', (_, url) => {
-    search(decodeURI(url))
+    currentMatch = search(decodeURI(url))
 });
 
 function showMessage(message) {
