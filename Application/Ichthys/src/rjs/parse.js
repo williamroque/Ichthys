@@ -73,7 +73,13 @@ function getExactMatch(text, index) {
     text = sanitize(text);
 
     for (const book in index) {
-        const sorted = Object.keys(index[book]).sort((a, b) => b.length - a.length);
+        let sorted;
+
+        if (Array.isArray(index[book])) {
+            sorted = index[book];
+        } else {
+            sorted = Object.keys(index[book]).sort((a, b) => b.length - a.length);
+        }
 
         for (const title of sorted) {
             const sanitizedTitle = sanitize(title);

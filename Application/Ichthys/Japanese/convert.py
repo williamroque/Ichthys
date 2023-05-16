@@ -1,22 +1,22 @@
 import json
 
 
-# name = 'dc'
-# data_path = f'{name}.json'
-# index_path = f'{name}_index.json'
-# output_path = f'{name}.ichs'
-# use_books = False
-# aliases = ['d&c', 'doctrine and covenants', 'doutrina e convênios', 'doutrina e convenios']
-# lang = 'English'
-
-name = 'bofm'
-
-lang = 'Japanese'
+name = 'dc'
 data_path = f'{name}.json'
 index_path = f'{name}_index.json'
 output_path = f'{name}.ichs'
-use_books = True
-aliases = []
+use_books = False
+aliases = ['d&c', 'doctrine and covenants', 'doutrina e convênios', 'doutrina e convenios']
+lang = 'Japanese'
+
+# name = 'pgp'
+
+# lang = 'Japanese'
+# data_path = f'{name}.json'
+# index_path = f'{name}_index.json'
+# output_path = f'{name}.ichs'
+# use_books = True
+# aliases = []
 
 with open(data_path) as data_file:
     data_raw = json.loads(data_file.read())

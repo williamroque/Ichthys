@@ -70,17 +70,25 @@ def get_title_count(soup):
     return count if count > 0 else 1
 
 
+def parse_verse(verse):
+    text = ''
+
+    for element in verse.contents:
+        if isinstance(element, NavigableString) or element.name == 'ruby':
+            text += str(element)
+        elif element.name == 'a':
+            text += parse_verse(element)
+        else:
+            text += element.get_text()
+
+    return text
+
+
 def get_verses(soup):
     verses = []
 
     for verse in soup.find_all('p', class_='verse'):
-        text = ''
-        for element in verse.contents:
-            if isinstance(element, NavigableString) or element.name == 'ruby':
-                text += str(element)
-            else:
-                text += element.get_text()
-
+        text = parse_verse(verse)
         verses.append(text.strip())
 
     return verses
