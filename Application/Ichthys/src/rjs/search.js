@@ -266,6 +266,8 @@ function saveVerseExcursion(callback) {
 }
 
 document.addEventListener('keydown', e => {
+    if (e.metaKey || e.ctrlKey) return;
+
     messagePrompt.classList.add('hide');
 
     if (e.key === 'c') {
